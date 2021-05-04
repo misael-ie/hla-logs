@@ -1,0 +1,16 @@
+download filebeat: 
+ - curl https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.5.2-linux-x86_64.tar.gz -L -O
+ - tar xvzf filebeat-7.5.2-linux-x86_64.tar.gz
+ - cd filebeat-7.5.2-linux-x86_64
+ - vim filebeat.yml
+   - l24: [false > true]
+   - l28: [mudar para o path de logs do airflow]
+     - /usr/local/airflow/logs/*/*/*/*.log
+     - Corresponde a: "%{dag_id}-%{task_id}-%{execution_date}-%{try_number}"
+   - l148: comentar
+   - l150: comentar
+   - l158: descomentar
+   - l160: descomentar e colocar o endereço do docker do logstash (logstash:5044)
+ - Ativar o filebeat
+  - ./filebeat -e -c filebeat.yml -d "publish" 
+
